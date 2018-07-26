@@ -3,7 +3,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ListPage } from '../pages/list/list';
+import { PrizeListPage } from '../pages/prize-list/prize-list';
+import { UserAdminPage } from '../pages/user-admin/user-admin';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -30,7 +31,9 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Hello Ionic', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage }
+      { title: 'Prizes', component: PrizeListPage },
+      { title: 'User Admin', component: UserAdminPage }
+      // TODO: Add more pages in here for prize management, user management and app game
     ];
   }
 
@@ -40,6 +43,8 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      // TODO: Check the database for users and prizes
     });
   }
 

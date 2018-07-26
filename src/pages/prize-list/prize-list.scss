@@ -1,0 +1,19 @@
+page-prize-list {
+    .content-bg {
+        background-color: map-get($colors, light);
+    }
+
+    .prize-card {
+        padding: 1.1rem;
+
+        h2 {
+            font-weight: bold;
+        }
+        p {
+            color: map-get($colors, semi-light);
+        }
+        small {
+            color: map-get($colors, secondary);
+        }
+    }
+}
