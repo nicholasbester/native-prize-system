@@ -7,6 +7,6 @@ import { UserAdminPage } from './user-admin';
   ],
   imports: [
     IonicPageModule.forChild(UserAdminPage),
-  ],
+  ]
 })
 export class UserAdminPageModule {}

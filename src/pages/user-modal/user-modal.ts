@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
+import { User } from '../../models/User';
 
-// @IonicPage()
 @Component({
   selector: 'page-user-modal',
   templateUrl: 'user-modal.html',
 })
 export class UserModalPage {
-  user: Object;
+  user: User;
 
   constructor(public params: NavParams, public viewCtrl: ViewController) {
     this.user = params.get('user');

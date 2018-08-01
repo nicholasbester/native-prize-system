@@ -3,18 +3,22 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
+import { HomePage } from '../pages/home/home';
 import { PrizeListPage } from '../pages/prize-list/prize-list';
 import { UserAdminPage } from '../pages/user-admin/user-admin';
 import { UserModalPage } from '../pages/user-modal/user-modal';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { IonicStorageModule } from '@ionic/storage';
+import { UserDataProvider } from '../providers/user-data/user-data';
+import { PrizeDataProvider } from '../providers/prize-data/prize-data';
 
 @NgModule({
   declarations: [
     MyApp,
-    HelloIonicPage,
+    HomePage,
     PrizeListPage,
     UserAdminPage,
     UserModalPage
@@ -22,11 +26,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HelloIonicPage,
+    HomePage,
     PrizeListPage,
     UserAdminPage,
     UserModalPage
@@ -34,6 +39,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
+    SocialSharing,
+    UserDataProvider,
+    PrizeDataProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
