@@ -12,8 +12,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { IonicStorageModule } from '@ionic/storage';
-import { UserDataProvider } from '../providers/user-data/user-data';
-import { PrizeDataProvider } from '../providers/prize-data/prize-data';
+import { DataProvider } from '../providers/data-provider';
+import { File } from '@ionic-native/file';
 
 @NgModule({
   declarations: [
@@ -40,8 +40,8 @@ import { PrizeDataProvider } from '../providers/prize-data/prize-data';
     StatusBar,
     SplashScreen,
     SocialSharing,
-    UserDataProvider,
-    PrizeDataProvider,
+    DataProvider,
+    File,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

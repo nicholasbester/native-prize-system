@@ -9,7 +9,7 @@ import { UserAdminPage } from '../pages/user-admin/user-admin';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SocialSharing } from '@ionic-native/social-sharing';
-
+import { DataProvider } from '../providers/data-provider';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,7 +17,6 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  // make HomePage the root (or first) page
   rootPage = HomePage;
   pages: Array<{title: string, component: any}>;
 
@@ -26,14 +25,15 @@ export class MyApp {
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public socialSharing: SocialSharing
+    public socialSharing: SocialSharing,
+    public dataProvider: DataProvider
   ) {
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Prizes', component: PrizeListPage },
+      { title: 'Prize management', component: PrizeListPage },
       { title: 'Users registered', component: UserAdminPage }
       // TODO: Add more pages in here for prize management, user management and app game
     ];
@@ -46,7 +46,8 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      // TODO: Check the database for users and prizes
+      // The user and prize data services are initialised and checked for existing data.
+      this.dataProvider.initialise();
     });
   }
 

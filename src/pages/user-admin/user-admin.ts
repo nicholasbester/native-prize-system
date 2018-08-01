@@ -2,35 +2,33 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, AlertController } from 'ionic-angular';
 import { UserModalPage } from '../user-modal/user-modal';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { User } from '../../models/User';
-import { UserDataProvider } from '../../providers/user-data/user-data';
+import { DataProvider } from '../../providers/data-provider';
 
 @IonicPage()
 @Component({
   selector: 'page-user-admin',
-  templateUrl: 'user-admin.html',
+  templateUrl: 'user-admin.html'
 })
 export class UserAdminPage {
-  users: User[];
-  sendAddress: string;
-  usrService: UserDataProvider;
-  emailSharing:SocialSharing;
+  users: Array<any>;
 
-  constructor(public modalCtrl:ModalController, public alertCtrl:AlertController, private socialSharing:SocialSharing, private userService:UserDataProvider) {
-    this.usrService = userService;
-    socialSharing.canShareViaEmail().then(() => {
-      this.emailSharing = socialSharing;
+  constructor(public modalCtrl:ModalController, public alertCtrl:AlertController, private socialSharing:SocialSharing, private dataProvider:DataProvider) {
+    this.users = [];
+
+    this.socialSharing.canShareViaEmail().then(() => {
+      console.log('Sharing is possible');
     }).catch(() => {
-      throw ('Email sharing is NOT possible');
+      console.log('Email sharing is NOT possible');
     });
   }
 
-  async onInit() {
-    this.users = await this.usrService.getUsers();
+  ngOnInit() {
+    this.users = this.dataProvider.getData('users');
   }
 
   openModal(user) {
-    let userModalPage = this.modalCtrl.create(UserModalPage, {user: user}).present();
+    let userModalPage = this.modalCtrl.create(UserModalPage, {user: user});
+    userModalPage.present();
   }
 
   showExportEmailShare() {
@@ -55,6 +53,7 @@ export class UserAdminPage {
       text: 'Send',
       handler: data => {
         console.log('Send clicked and data is ' + data.email);
+        this.dataProvider.exportData('users');
       }
     }]
     });
@@ -69,13 +68,14 @@ export class UserAdminPage {
         {
           text: 'No',
           handler: () => {
-            console.log('Disagree clicked');
+            console.log('Declined clearing database');
           }
         },
         {
           text: 'Yes',
           handler: () => {
-            console.log('Agree clicked');
+            this.users = [];
+            this.dataProvider.clearData('users');
           }
         }
       ]

@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
-import { Prize } from '../../models/Prize';
-import { PrizeDataProvider } from '../../providers/prize-data/prize-data';
+import { DataProvider } from '../../providers/data-provider';
 
 @IonicPage()
 @Component({
   selector: 'page-prize-list',
-  templateUrl: 'prize-list.html',
+  templateUrl: 'prize-list.html'
 })
 export class PrizeListPage {
-  prizes: Prize[];
+  prizes: Array<any>;
 
-  constructor(private prizeService: PrizeDataProvider) {}
+  constructor(private dataProvider: DataProvider) {
+    this.prizes = [];
+  }
 
-  async onInit() {
-    this.prizes = await this.prizeService.getPrizes();
+  ngOnInit() {
+    this.prizes = this.dataProvider.getData('prizes');
   }
 
   ionViewDidLoad() {
