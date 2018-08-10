@@ -33,15 +33,8 @@ export class UserAdminPage {
 
   showExportEmailShare() {
     const prompt = this.alertCtrl.create({
-    title: 'Email user data',
-    message: "Type in your email address so we can send you the user data captured in the app as a CSV attachment",
-    inputs: [
-      {
-        name: 'email',
-        placeholder: 'Email',
-        type: 'email'
-      },
-    ],
+    title: 'Export the data',
+    message: "Export the CSV data to file",
     buttons: 
     [{
       text: 'Cancel',
@@ -50,9 +43,8 @@ export class UserAdminPage {
       }
     },
     {
-      text: 'Send',
+      text: 'Export',
       handler: data => {
-        console.log('Send clicked and data is ' + data.email);
         this.dataProvider.exportData('users');
       }
     }]

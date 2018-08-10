@@ -5,6 +5,8 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 import { HomePage } from '../pages/home/home';
 import { PrizeListPage } from '../pages/prize-list/prize-list';
 import { UserAdminPage } from '../pages/user-admin/user-admin';
+import { StartPage } from '../pages/start/start';
+import { RegisterPage } from '../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,7 +19,7 @@ import { DataProvider } from '../providers/data-provider';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage = HomePage;
+  rootPage = RegisterPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(
@@ -34,8 +36,8 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'Prize management', component: PrizeListPage },
-      { title: 'Users registered', component: UserAdminPage }
-      // TODO: Add more pages in here for prize management, user management and app game
+      { title: 'Users registered', component: UserAdminPage },
+      { title: 'Game', component: StartPage },
     ];
   }
 

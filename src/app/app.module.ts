@@ -7,6 +7,10 @@ import { HomePage } from '../pages/home/home';
 import { PrizeListPage } from '../pages/prize-list/prize-list';
 import { UserAdminPage } from '../pages/user-admin/user-admin';
 import { UserModalPage } from '../pages/user-modal/user-modal';
+import { StartPage } from '../pages/start/start';
+import { RegisterPage } from '../pages/register/register';
+import { GamePage } from '../pages/game/game';
+import { ThankYouPage } from '../pages/thank-you/thank-you';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,12 +25,16 @@ import { File } from '@ionic-native/file';
     HomePage,
     PrizeListPage,
     UserAdminPage,
-    UserModalPage
+    UserModalPage,
+    StartPage,
+    RegisterPage,
+    GamePage,
+    ThankYouPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -34,7 +42,11 @@ import { File } from '@ionic-native/file';
     HomePage,
     PrizeListPage,
     UserAdminPage,
-    UserModalPage
+    UserModalPage,
+    StartPage,
+    RegisterPage,
+    GamePage,
+    ThankYouPage
   ],
   providers: [
     StatusBar,
