@@ -78,5 +78,5 @@ export class UserAdminPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserAdminPage');
   }
-
+  
 }
