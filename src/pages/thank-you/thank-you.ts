@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ThankYouPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { StartPage } from '../start/start';
 
 @IonicPage()
 @Component({
@@ -15,7 +9,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ThankYouPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+
+  gotoPage(page:string) {
+    if(page === 'start') {
+      this.navCtrl.setRoot(StartPage);
+    }
   }
 
   ionViewDidLoad() {

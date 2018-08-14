@@ -38,9 +38,30 @@ export class DataProvider {
     }
   }
 
+  getUserFields():Array<Object> {
+    return User.fieldTypes;
+  }
+
+  getFormData():Object {
+    let obj = {};
+    for (let item in this.getUserFields()) {
+      obj[this.getUserFields()[item]['name']] = this.getUserFields()[item]['formBuilder'];
+    }
+    return obj;
+  }
+
   async saveData(data: any, ratio:number = 5) {
-    if (data instanceof User) {
-      this.userService.saveUser(data);
+    if (data instanceof Object) {
+      let obj = {};
+      for (let item in data) {
+        obj[item.toString()] = data[item];
+      }
+
+      // TODO: Refactor this to dynamically insert user data into the model by accepting an object
+      // Factory pattern?
+      let usr = new User(obj['name'], obj['surname'], obj['email'], obj['cellNumber'], obj['marketing']);
+      
+      this.userService.saveUser(usr);
     } else if (data instanceof Prize) {
       this.prizeService.savePrize(data, ratio);
     }

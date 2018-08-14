@@ -10,8 +10,7 @@ import { RegisterPage } from '../register/register';
 export class StartPage {
   @ViewChild(Nav) nav: Nav;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   gotoStart() {
     this.navCtrl.setRoot(RegisterPage);

@@ -32,7 +32,7 @@ export class UserAdminPage {
   }
 
   showExportEmailShare() {
-    const prompt = this.alertCtrl.create({
+    let prompt = this.alertCtrl.create({
     title: 'Export the data',
     message: "Export the CSV data to file",
     buttons: 
@@ -53,7 +53,7 @@ export class UserAdminPage {
   }
 
   showDeleteConfirmation() {
-    const confirm = this.alertCtrl.create({
+    let confirm = this.alertCtrl.create({
       title: 'Would you like to clear the user database?',
       message: 'By doing this you will wipe all the information off this device and it will no longer be recoverable, please ensure that you have backed up the data before doing this.',
       buttons: [

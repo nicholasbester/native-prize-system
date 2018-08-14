@@ -26,7 +26,7 @@ export class PrizeService {
     return this.prizes;
   }
 
-  async savePrize(data, ratio) {
+  async savePrize(data:Prize, ratio:number) {
     this.prizes = await this.storage.get("prizes");
     this.prizes.push(data);
     this.storage.set("prizes", this.prizes);

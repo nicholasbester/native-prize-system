@@ -1,22 +1,20 @@
 <ion-content padding>
-  logo
-  <ion-item *ngFor='let item of userFields'>
-    <ion-label *ngIf="item.type !== 'checkbox';" color="primary" stacked>{{ item.label }}</ion-label>
-    <ion-input *ngIf="item.type !== 'checkbox'; else checkBox" type="{{ item.type }}" placeholder="{{ item.placeholder }}"></ion-input>
+  <button ion-button color="primary" menuToggle>Toggle Menu</button>
+  <form [formGroup]="formData" (ngSubmit)="submitForm()">
+    <ion-item *ngFor='let item of userFields'>
+      <ion-label *ngIf="item.type !== 'checkbox';" color="primary" stacked>{{ item.label }}</ion-label>
+      <ion-input formControlName="{{ item.name }}" *ngIf="item.type !== 'checkbox'; else checkBox" type="{{ item.type }}" placeholder="{{ item.placeholder }}" required></ion-input>
 
-    <ng-template #checkBox>
-      <ion-label color="primary">{{ item.placeholder }}</ion-label>
-      <ion-checkbox [(ngModel)]="marketing"></ion-checkbox>
-    </ng-template>
-  </ion-item>
+      <ng-template #checkBox>
+        <ion-label color="primary">{{ item.placeholder }}</ion-label>
+        <ion-checkbox formControlName="{{ item.name }}"></ion-checkbox>
+      </ng-template>
+    </ion-item>
 
-  <button ion-button icon-start float-left>
-    <ion-icon name="close"></ion-icon>
-    Cancel
-  </button>
+    <button type="submit" ion-button icon-end float-right block>
+        Register
+        <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </form>
 
-  <button ion-button icon-end float-right>
-    Register
-    <ion-icon name="arrow-forward"></ion-icon>
-  </button>
 </ion-content>

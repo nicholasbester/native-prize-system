@@ -28,33 +28,6 @@ export class UserService {
     this.storage.get("users").then((value: Array<User>) => {
       value.length === 0 ? (this.users = []) : (this.users = value);
     });
-
-    // TODO: Temporary
-    this.users = await this.storage.set("users", [
-      new User("ljkhlkjh", "ljhlkjh", "ljkhl@jhljh.com", "75647547", true),
-      new User(
-        "Dalkjhlkjhvid",
-        "Blah",
-        "ljkhljkh@lkjhljk.com",
-        "7564765476",
-        true
-      ),
-      new User(
-        "Jljkhlkjhames",
-        "Test",
-        "jghfjhgf@ghfjhg.com",
-        "76547654",
-        true
-      ),
-      new User(
-        "Silkjhljkmon",
-        "jkfhfslkjsh",
-        "jgfjghf@jhgfjgh.com",
-        "75647564",
-        true
-      ),
-      new User("Jojkhljhhn", "Mississippi", "me@gfjgf.com", "76547654", true)
-    ]);
   }
 
   getUsers(): Array<User> {
