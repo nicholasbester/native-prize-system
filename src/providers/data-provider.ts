@@ -7,10 +7,6 @@ import { Platform } from "ionic-angular";
 import { UserService } from "../services/user-service";
 import { PrizeService } from "../services/prize-service";
 
-// TODO: Separate out the provider for user and prize data
-// Structure providers and services better based on definitions of each:
-// https://www.joshmorony.com/when-to-use-providersservicesinjectables-in-ionic/
-
 @Injectable()
 export class DataProvider {
   userService:UserService;
@@ -38,6 +34,10 @@ export class DataProvider {
     }
   }
 
+  getUserPrize():Prize {
+    return this.prizeService.getPrize();
+  }
+
   getUserFields():Array<Object> {
     return User.fieldTypes;
   }
@@ -50,8 +50,8 @@ export class DataProvider {
     return obj;
   }
 
-  async saveData(data: any, ratio:number = 5) {
-    if (data instanceof Object) {
+  async saveData(data: any, type:string) {
+    if (type == 'user') {
       let obj = {};
       for (let item in data) {
         obj[item.toString()] = data[item];
@@ -59,11 +59,11 @@ export class DataProvider {
 
       // TODO: Refactor this to dynamically insert user data into the model by accepting an object
       // Factory pattern?
-      let usr = new User(obj['name'], obj['surname'], obj['email'], obj['cellNumber'], obj['marketing']);
-      
+      let usr = new User(obj['name'], obj['surname'], obj['email'], obj['venue'], obj['cellNumber'], obj['marketing']);
+
       this.userService.saveUser(usr);
-    } else if (data instanceof Prize) {
-      this.prizeService.savePrize(data, ratio);
+    } else if (type == 'prize') {
+      this.prizeService.savePrize(data);
     }
   }
 

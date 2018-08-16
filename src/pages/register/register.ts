@@ -13,6 +13,7 @@ import { DataProvider } from '../../providers/data-provider';
 export class RegisterPage {
   userFields: Array<Object>;
   formData: FormGroup;
+  foo = 5;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private dataProvider:DataProvider, public alertCtrl:AlertController) {
     this.userFields = this.dataProvider.getUserFields();
@@ -21,8 +22,9 @@ export class RegisterPage {
 
   submitForm() {
     console.log(this.formData.value);
-    if (this.formData.valid) {
-      this.dataProvider.saveData(this.formData.value);
+    if (this.formData.valid && this.formData.value['venue'] !== 'None') {
+      this.dataProvider.saveData(this.formData.value, 'user');
+      this.gotoPage('game');
     } else {
       this.showFormValidation();
     }
@@ -30,7 +32,7 @@ export class RegisterPage {
 
   showFormValidation() {
     let requiredFieldsWarning = this.alertCtrl.create({
-      title: 'Oops, all fields are required',
+      title: 'Oh no!',
       message: 'Please add all information into the fields ',
       buttons: [
         {
@@ -46,6 +48,8 @@ export class RegisterPage {
       this.navCtrl.setRoot(StartPage);
     } else if (page === 'game') {
       this.navCtrl.setRoot(GamePage);
+    } else if (page === 'back') {
+      this.navCtrl.getPrevious();
     }
   }
 

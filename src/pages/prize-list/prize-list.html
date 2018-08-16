@@ -2,8 +2,8 @@
 
   <ion-navbar>
     <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Prizes</ion-title>
   </ion-navbar>
 
@@ -11,8 +11,25 @@
 
 
 <ion-content class="content-bg">
-  <ion-card class="prize-card" *ngFor="let prize of prizes">
-      <h2>Name: {{prize.name}}</h2>
-      <p>Quantity remaining: {{prize.quantity}}</p>
+  <ion-card class="prize-card" *ngFor="let prize of prizes; let index = index;">
+    <h2>Name: {{prize.name}}</h2>
+    <p>Quantity remaining:
+      <input type="number" name=prize-{{index}} [(ngModel)]="prizes[index].quantity" placeholder="Prize quantity"
+        value="prize">
+    </p>
   </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar padding color="semi-light">
+    <p>
+      <strong>Administration</strong>
+    </p>
+    <ion-buttons end>
+      <button ion-button icon-end color="primary" end (click)="savePrizes()">
+        Save Prize Data
+        <ion-icon name="download"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

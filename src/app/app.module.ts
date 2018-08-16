@@ -12,6 +12,9 @@ import { RegisterPage } from '../pages/register/register';
 import { GamePage } from '../pages/game/game';
 import { ThankYouPage } from '../pages/thank-you/thank-you';
 
+import { VinylComponent } from '../components/vinyl/vinyl';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -29,10 +32,12 @@ import { File } from '@ionic-native/file';
     StartPage,
     RegisterPage,
     GamePage,
-    ThankYouPage
+    ThankYouPage,
+    VinylComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
   ],

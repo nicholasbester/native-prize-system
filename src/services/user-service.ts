@@ -4,10 +4,6 @@ import { Storage } from "@ionic/storage";
 import { File } from "@ionic-native/file";
 import { Platform } from "ionic-angular";
 
-// TODO: Separate out the provider for user and prize data
-// Structure providers and services better based on definitions of each:
-// https://www.joshmorony.com/when-to-use-providersservicesinjectables-in-ionic/
-
 @Injectable()
 export class UserService {
   users: Array<User>;
@@ -26,7 +22,7 @@ export class UserService {
 
   async initialise() {
     this.storage.get("users").then((value: Array<User>) => {
-      value.length === 0 ? (this.users = []) : (this.users = value);
+      if (value) value.length === 0 ? (this.users = []) : (this.users = value);
     });
   }
 
@@ -35,7 +31,8 @@ export class UserService {
   }
 
   async saveUser(data) {
-    this.users = await this.storage.get("users");
+    if (this.users) this.users = await this.storage.get("users");
+    else this.users = [];
     this.users.push(data);
     this.storage.set("users", this.users);
   }

@@ -1,5 +1,11 @@
-<ion-content>
-    Game goes here
+<ion-content class="game">
+    <ion-grid>
+        <ion-row>
+            <ion-col col-6><vinyl (mouseup)="getPrize()"></vinyl></ion-col>
+            <ion-col col-6><vinyl (mouseup)="getPrize()"></vinyl></ion-col>
+        </ion-row>
+    </ion-grid>
     <button ion-button color="primary" (click)="gotoPage('register')">Go back</button>
     <button ion-button color="primary" (click)="gotoPage('thank-you')">Thank you page</button>
+    <button ion-button color="primary" menuToggle>Toggle Menu</button>
 </ion-content>

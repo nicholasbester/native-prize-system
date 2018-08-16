@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ThankYouPage } from '../thank-you/thank-you';
 import { RegisterPage } from '../register/register';
+import { DataProvider } from '../../providers/data-provider';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,26 @@ import { RegisterPage } from '../register/register';
 })
 export class GamePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  prizeReceived:Boolean = false
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataProvider:DataProvider) {}
+
+  // TODO: 
+  // Display Prize
+  // Load Vinyls components
+
+  getPrize() {
+    // if (!this.prizeReceived) {
+      let prize:any = this.dataProvider.getUserPrize();
+      this.prizeReceived = true;
+      // Display prize
+      if (prize == 'try-again') {
+        console.log(prize);
+      } else {
+        console.log(prize.name);
+      }
+      // Display button to go to Thank you page
+    // } 
   }
 
   gotoPage(page:string) {
@@ -24,5 +44,4 @@ export class GamePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad GamePage');
   }
-
 }

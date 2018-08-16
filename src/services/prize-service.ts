@@ -5,32 +5,41 @@ import { Storage } from "@ionic/storage";
 @Injectable()
 export class PrizeService {
   prizes: Array<Prize>;
+  userPrizes: Array<any>;
 
   constructor(private storage: Storage) {}
 
   async initialise() {
-    this.storage.get("prizes").then((value: Array<Prize>) => {
-      value.length === 0 ? (this.prizes = []) : (this.prizes = value);
+    await this.storage.get("prizes").then((value: Array<Prize>) => {
+      if (value && value.length > 0) {
+        console.log('Prize array exists, restoring array');
+        this.prizes = value;
+        this.userPrizes = this.createPrizeArray(this.prizes, Prize.RATIO);
+      } else {
+        console.log('Create prize array');
+        this.setNewPrizes();
+        this.userPrizes = this.createPrizeArray(this.prizes, Prize.RATIO);
+      }
     });
+  }
 
-    // TODO: Temporary
-    this.prizes = await this.storage.set("prizes", [
-      new Prize("Toy", "Awesome", 5),
-      new Prize("Ball", "Ok", 5),
-      new Prize("Blanket", "Fun", 10),
-      new Prize("Frisbie", "Dog", 5)
-    ]);
+  async setNewPrizes() {
+    console.log('Setting new prize array');
+    this.prizes = Prize.setDefaultPrizes();
+    await this.storage.set("prizes", this.prizes);
   }
 
   getPrizes(): Array<Prize> {
+    console.log('Get this.prizes');
     return this.prizes;
   }
 
-  async savePrize(data:Prize, ratio:number) {
-    this.prizes = await this.storage.get("prizes");
-    this.prizes.push(data);
-    this.storage.set("prizes", this.prizes);
-    this.createPrizeArray(ratio);
+  async savePrize(data:Array<Prize>) {
+    console.log('Save prizes')
+    this.prizes = data;
+    await this.storage.set("prizes", this.prizes).then(() => {
+      this.createPrizeArray(this.prizes, Prize.RATIO);
+    });
   }
 
   clearPrizes() {
@@ -38,40 +47,52 @@ export class PrizeService {
     this.storage.set("prizes", []);
   }
 
+  getPrize(): Prize {
+    let prize = this.userPrizes.pop();
+    this.decrementPrize(prize);
+    return prize;
+  }
+
   // Decrement prize value
-  decrementPrize(prize: Prize) {
-    this.prizes.forEach(prize => {
-      prize.quantity--;
-    });
+  async decrementPrize(prize: Prize) {
+    for (let i = 0; i < this.prizes.length; i++) {
+      if (this.prizes[i] === prize) this.prizes[i].quantity--;
+    };
+
+    this.prizes = await this.storage.set("prizes", this.prizes);
   }
 
   // A prize array is created from the prizes and amount of times a person can try again
-  createPrizeArray(ratio: number): Array<string> {
+  createPrizeArray(inarr:Array<Prize>, ratio: number): Array<any> {
+    console.log('Creating user prize array');
     let arr = [];
-    let prizeLength = 0;
-    let localPrizes = this.prizes;
+    let localPrizes = inarr.slice(0);
+    let tempQuantities:Array<number> = [];
 
-    // Get the quantity of the prizes into a value
-    this.prizes.forEach(item => {
-      prizeLength += item.quantity;
+    // Get the quantity of the prizes into a value and store the quantities for reference
+    inarr.forEach(item => {
+      tempQuantities.push(item.quantity);
     });
-
-    // We multiply against try again ratio to get the length of the prize array
-    prizeLength = prizeLength * ratio;
 
     // Local prize quantities is decrimented until no prizes remain to dispense
     // Prizes are pushed to an array to be understood by the prize mechanic
-    for (var i = 0; i < prizeLength; i++) {
+    let i = 0;
+    while (localPrizes.length > 0) {
       if (i % ratio === 0) {
-        let randomValue = Math.floor(Math.random() * (localPrizes.length - 1));
-        arr.push(localPrizes[randomValue].name);
+        let randomValue = Math.floor(Math.random() * (localPrizes.length));
+        arr.push(localPrizes[randomValue]);
         localPrizes[randomValue].quantity--;
-        if (localPrizes[randomValue].quantity === 0)
-          localPrizes.splice(randomValue, 1);
-      } else {
-        arr.push("tryAgain");
-      }
+        if (localPrizes[randomValue].quantity === 0) localPrizes.splice(randomValue, 1);
+      } else arr.push("try-again");
+      i++;
     }
+
+    let count = 0;
+    inarr.forEach(item => {
+      item.quantity = tempQuantities[count];
+      count++;
+    });
+
     return arr;
   }
 }

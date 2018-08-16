@@ -5,6 +5,7 @@ export class User {
     surname: string;
     email: string;
     cellNumber: string;
+    venue: string;
     marketing: boolean;
 
     // This static variable contains the field labels, field types and placeholder text for display on the register page
@@ -39,6 +40,38 @@ export class User {
             placeholder: 'Enter your cell number'
         },
         {
+            label: 'Venue',
+            name: 'venue',
+            formBuilder: ['No selection',  Validators.required],
+            type: 'select',
+            placeholder: 'Select a venue',
+            dropdown: [
+                { name:"No selection" },
+                { name:"Port Elizabeth" },
+                { name:"East London" },
+                { name:"Boksburg" },
+                { name:"Emperors Palace" },
+                { name:"Hatfield" },
+                { name:"Mall@55" },
+                { name:"Menlyn" },
+                { name:"Meyersdal" },
+                { name:"Midrand" },
+                { name:"Newtown Junction" },
+                { name:"Northriding" },
+                { name:"Randburg" },
+                { name:"Rivonia" },
+                { name:"Rosebank" },
+                { name:"Sandton" },
+                { name:"Soweto" },
+                { name:"Town Square" },
+                { name:"Woodmead" },
+                { name:"Umhlanga Ridge" },
+                { name:"Nelspruit" },
+                { name:"Witbank" },
+                { name:"Table View" }
+            ]
+        },
+        {
             label: 'Marketing',
             name: 'marketing',
             formBuilder: [true],
@@ -47,10 +80,11 @@ export class User {
         }
     ]
 
-    constructor(name:string, surname:string, email:string, cellNumber: string, marketing: boolean) {
+    constructor(name:string, surname:string, email:string, venue:string, cellNumber: string, marketing: boolean) {
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.venue = venue;
         this.cellNumber = cellNumber;
         this.marketing = marketing;
     }
