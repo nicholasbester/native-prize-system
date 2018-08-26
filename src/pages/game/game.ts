@@ -1,43 +1,96 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ThankYouPage } from '../thank-you/thank-you';
+import { Component, ViewChild } from '@angular/core';
+import { ModalController, Modal, NavController, NavParams } from 'ionic-angular';
+import { StartPage } from '../start/start';
 import { RegisterPage } from '../register/register';
 import { DataProvider } from '../../providers/data-provider';
+import { PrizeModalPage } from '../prize-modal/prize-modal';
+import { NativeAudio } from '@ionic-native/native-audio';
+import { VinylComponent } from '../../components/vinyl/vinyl';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 
-@IonicPage()
 @Component({
   selector: 'page-game',
   templateUrl: 'game.html',
 })
 export class GamePage {
+  @ViewChild('vinylA') vinylA:VinylComponent;
+  @ViewChild('vinylB') vinylB:VinylComponent;
 
   prizeReceived:Boolean = false
+  prizeName:string = '';
+  prizeModalPage:Modal;
+  audioLoaded:Boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataProvider:DataProvider) {}
+  options: NativeTransitionOptions = {
+    duration: 2000,
+    slowdownfactor: 10,
+    slidePixels: 200,
+    iosdelay: 150,
+    androiddelay: 150
+  }
 
-  // TODO: 
-  // Display Prize
-  // Load Vinyls components
+  constructor(public modalCtrl:ModalController, public navCtrl: NavController, public navParams: NavParams, private dataProvider:DataProvider, private nativeAudio: NativeAudio, private nativePageTransition: NativePageTransitions) {
+  }
 
-  getPrize() {
-    // if (!this.prizeReceived) {
+  ngAfterViewInit() {
+    this.nativeAudio.play('music');
+  }
+
+  stopMusic() {
+    this.nativeAudio.stop('music');
+  }
+  
+  playScratch() {
+    this.nativeAudio.play('scratch');
+    
+  }
+
+  getPrize(vinyl:string) {
+    if (!this.prizeReceived) {
       let prize:any = this.dataProvider.getUserPrize();
       this.prizeReceived = true;
-      // Display prize
-      if (prize == 'try-again') {
-        console.log(prize);
+
+      this.nativeAudio.play('scratch');
+      this.nativeAudio.stop('music');
+
+      // TODO: Play scratch sound here
+      if (vinyl == 'prizeModalA') this.vinylB.stopSpinning();
+      if (vinyl == 'prizeModalB') this.vinylA.stopSpinning();
+
+      if (prize !== undefined) {
+        if (prize == 'try-again') {
+          this.displayPrizeModal({name: 'try-again', imageSource: 'try-again.png'}, vinyl);
+          this.prizeName = 'try-again';
+
+          this.nativeAudio.play('aww');
+
+        } else {
+          this.prizeName = prize.name;
+          this.displayPrizeModal(prize, vinyl);
+
+          this.nativeAudio.play('cheer');
+        }
       } else {
-        console.log(prize.name);
+        this.prizeName = 'try-again';
+        this.displayPrizeModal({name: 'try-again', imageSource: 'try-again.png'}, vinyl);
+        this.nativeAudio.play('aww');
       }
-      // Display button to go to Thank you page
-    // } 
+    } 
+  }
+
+  displayPrizeModal(prize: Object, vinyl:string) {
+    this.prizeModalPage = this.modalCtrl.create(PrizeModalPage, {prize: prize}, {showBackdrop: false, cssClass: vinyl, enableBackdropDismiss: false });
+    this.prizeModalPage.present();
   }
 
   gotoPage(page:string) {
+    this.nativePageTransition.fade(this.options);
     if(page === 'register') {
-      this.navCtrl.setRoot(RegisterPage);
-    } else if (page === 'thank-you') {
-      this.navCtrl.setRoot(ThankYouPage);
+      this.navCtrl.push(RegisterPage);
+    } else if (page === 'start') {
+      this.prizeModalPage.dismiss().then( () => {
+        this.navCtrl.push(StartPage);
+      });
     }
   }
 

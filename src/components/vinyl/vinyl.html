@@ -1,5 +1,13 @@
-<div (mousedown)="down($event)" (mouseup)="up($event)" (mousemove)="drag($event)">
-  <svg width="512px" viewBox="0 0 512 512" #record id="record" class="vinyl-style">
+<div class="gameComponent"  
+    (touchstart)="down($event)"
+    (mousedown)="down($event)" 
+    (mouseup)="up($event)"
+    (touchend)="up($event)"
+    (mousemove)="drag($event)" 
+    (touchmove)="drag($event)" 
+  >
+  <img src="assets/imgs/vinyl.png" alt="vinyl" class="vinyl-style" id="record" #record>
+  <!-- <svg width="512px" viewBox="0 0 512 512" #record id="record" class="vinyl-style">
     <g>
       <g id="record_group">
         <circle r="256" transform="scale(1,-1)" cy="-256" cx="256" style="fill:#000000;fill-opacity:1" />
@@ -16,11 +24,12 @@
         </text>
         <text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:15px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
           x="210.76865" y="290.0">
-          <tspan x="210.76865" y="290.0" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.5px;font-family:Futura;-inkscape-font-specification:'Futura Bold'">DJ Bacardi</tspan>
+          <tspan x="219.91144" y="290.0" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.5px;font-family:Futura;-inkscape-font-specification:'Futura Bold'">DJ Bacardi
+          </tspan>
         </text>
-        <text y="305.0" x="208.4707" style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:10px;line-height:125%;font-family:Futura;-inkscape-font-specification:'Futura Medium';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+        <text y="305.0" x="219.91144" style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:10px;line-height:125%;font-family:Futura;-inkscape-font-specification:'Futura Medium';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
           xml:space="preserve">
-          <tspan y="305.0" x="208.4707">Bacardi Records</tspan>
+          <tspan y="305.0" x="219.91144">Bacardi Records</tspan>
         </text>
       </g>
       <g>
@@ -56,5 +65,5 @@
         </g>
       </g>
     </g>
-  </svg>
+  </svg> -->
 </div>

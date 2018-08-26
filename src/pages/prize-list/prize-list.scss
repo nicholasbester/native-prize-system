@@ -1,6 +1,6 @@
 page-prize-list {
-    .content-bg {
-        background-color: map-get($colors, light);
+    .prize-list {
+        background-color: map-get($colors, dark);
     }
 
     .prize-card {
@@ -9,8 +9,10 @@ page-prize-list {
         h2 {
             font-weight: bold;
         }
-        p {
+        ion-input {
+            margin-top: 10px;
             color: map-get($colors, semi-light);
+            outline: 1px solid map-get($colors, dark);
         }
         small {
             color: map-get($colors, secondary);

@@ -7,19 +7,28 @@ export class PrizeService {
   prizes: Array<Prize>;
   userPrizes: Array<any>;
 
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage) { }
 
   async initialise() {
-    await this.storage.get("prizes").then((value: Array<Prize>) => {
-      if (value && value.length > 0) {
-        console.log('Prize array exists, restoring array');
-        this.prizes = value;
-        this.userPrizes = this.createPrizeArray(this.prizes, Prize.RATIO);
-      } else {
-        console.log('Create prize array');
-        this.setNewPrizes();
-        this.userPrizes = this.createPrizeArray(this.prizes, Prize.RATIO);
+    await this.storage.get('ratio').then((value: string) => {
+      if (value) Prize.RATIO = +value;
+      else {
+        console.log('Saving ratio');
+        Prize.RATIO = 10;
+        this.saveRatio(Prize.RATIO);
       }
+    }).then(() => {
+      this.storage.get("prizes").then((value: Array<Prize>) => {
+        if (value && value.length > 0) {
+          console.log('Prize array exists, restoring array');
+          this.prizes = value;
+          this.userPrizes = this.createPrizeArray(this.prizes, Prize.RATIO);
+        } else {
+          console.log('Create prize array');
+          this.setNewPrizes();
+          this.userPrizes = this.createPrizeArray(this.prizes, Prize.RATIO);
+        }
+      });
     });
   }
 
@@ -34,11 +43,16 @@ export class PrizeService {
     return this.prizes;
   }
 
-  async savePrize(data:Array<Prize>) {
+  async saveRatio(data: number) {
+    Prize.RATIO = data;
+    await this.storage.set('ratio', data);
+  }
+
+  async savePrize(data: Array<Prize>) {
     console.log('Save prizes')
     this.prizes = data;
     await this.storage.set("prizes", this.prizes).then(() => {
-      this.createPrizeArray(this.prizes, Prize.RATIO);
+      this.userPrizes = this.createPrizeArray(this.prizes, Prize.RATIO);
     });
   }
 
@@ -47,44 +61,59 @@ export class PrizeService {
     this.storage.set("prizes", []);
   }
 
+  getRatio(): number {
+    return Prize.RATIO;
+  }
+
   getPrize(): Prize {
     let prize = this.userPrizes.pop();
-    this.decrementPrize(prize);
+    if (prize != undefined) this.decrementPrize(prize);
     return prize;
   }
 
   // Decrement prize value
   async decrementPrize(prize: Prize) {
     for (let i = 0; i < this.prizes.length; i++) {
-      if (this.prizes[i] === prize) this.prizes[i].quantity--;
+      if (this.prizes[i] === prize) {
+        this.prizes[i].quantity--;
+        break;
+      }
     };
 
     this.prizes = await this.storage.set("prizes", this.prizes);
   }
 
   // A prize array is created from the prizes and amount of times a person can try again
-  createPrizeArray(inarr:Array<Prize>, ratio: number): Array<any> {
+  createPrizeArray(inarr: Array<Prize>, ratio: number): Array<any> {
     console.log('Creating user prize array');
     let arr = [];
     let localPrizes = inarr.slice(0);
-    let tempQuantities:Array<number> = [];
+    let tempQuantities: Array<number> = [];
+    let tempCount = 0;
 
     // Get the quantity of the prizes into a value and store the quantities for reference
     inarr.forEach(item => {
       tempQuantities.push(item.quantity);
+      tempCount = + item.quantity;
     });
 
-    // Local prize quantities is decrimented until no prizes remain to dispense
-    // Prizes are pushed to an array to be understood by the prize mechanic
-    let i = 0;
-    while (localPrizes.length > 0) {
-      if (i % ratio === 0) {
-        let randomValue = Math.floor(Math.random() * (localPrizes.length));
-        arr.push(localPrizes[randomValue]);
-        localPrizes[randomValue].quantity--;
-        if (localPrizes[randomValue].quantity === 0) localPrizes.splice(randomValue, 1);
-      } else arr.push("try-again");
-      i++;
+    if (tempCount) {
+      // Local prize quantities is decrimented until no prizes remain to dispense
+      // Prizes are pushed to an array to be understood by the prize mechanic
+      let i = 0;
+      while (localPrizes.length > 0) {
+        if (i % ratio === 0) {
+          let randomValue = Math.floor(Math.random() * (localPrizes.length));
+          arr.push(localPrizes[randomValue]);
+          localPrizes[randomValue].quantity--;
+          if (localPrizes[randomValue].quantity <= 0) localPrizes.splice(randomValue, 1);
+        } else {
+          arr.push("try-again");
+        }
+        i++;
+      }
+    } else {
+      console.log("No prizes loaded");
     }
 
     let count = 0;

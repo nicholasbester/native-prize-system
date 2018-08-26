@@ -1,23 +1,30 @@
 <ion-header>
-
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Prizes</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content class="content-bg">
-  <ion-card class="prize-card" *ngFor="let prize of prizes; let index = index;">
-    <h2>Name: {{prize.name}}</h2>
-    <p>Quantity remaining:
-      <input type="number" name=prize-{{index}} [(ngModel)]="prizes[index].quantity" placeholder="Prize quantity"
-        value="prize">
-    </p>
-  </ion-card>
+<ion-content class="prize-list">
+  <form class="prizeForm">
+    <ion-card class="prize-card">
+      <h2>Change the venue</h2>
+      <ion-label stacked color="primary">(Remember to tap the save button below)</ion-label>
+      <ion-input tabindex="1" type="text" name="venue" [(ngModel)]="venue" placeholder="Enter the venue name"></ion-input>
+    </ion-card>
+    <ion-card class="prize-card">
+        <h2>Adjust the prize win ratio</h2>
+        <ion-label stacked color="primary">(Remember to tap the save button below)</ion-label>
+        <ion-input tabindex="2" type="number" name="ratio" [(ngModel)]="ratio" placeholder="Enter the ratio number"></ion-input>
+      </ion-card>
+    <ion-card class="prize-card" *ngFor="let prize of prizes; let index = index;">
+      <h2>Name: {{prize.name}}</h2>
+      <ion-label stacked color="primary"><strong>Quantity remaining: {{ prizes[index]["quantity"] }}</strong></ion-label>
+      <ion-input tabindex="index + 2" type="number" [value]="prize.quantity" (input)='updateQuantity($event, index)' placeholder="Prize quantity"></ion-input>
+    </ion-card>
+  </form>
 </ion-content>
 
 <ion-footer>
@@ -25,10 +32,10 @@
     <p>
       <strong>Administration</strong>
     </p>
-    <ion-buttons end>
-      <button ion-button icon-end color="primary" end (click)="savePrizes()">
-        Save Prize Data
-        <ion-icon name="download"></ion-icon>
+    <ion-buttons start>
+      <button ion-button icon-end color="light" end (click)="saveData()">
+        Save changes
+        <ion-icon name="compass"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>

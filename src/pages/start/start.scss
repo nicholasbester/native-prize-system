@@ -1,3 +1,8 @@
-page-start {
-
+.start {
+    background-image: url('../assets/imgs/background-with-neon.jpg');
+    position: relative;
+    button {
+        position: absolute;
+        bottom : -520px;
+    }
 }

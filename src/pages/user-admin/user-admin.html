@@ -9,7 +9,7 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content class="user-admin">
   <ion-list>
     <ion-item *ngFor="let user of users" (click)="openModal(user)">
       <ion-icon name="contact" item-start></ion-icon>
@@ -32,7 +32,7 @@
       </button>
     </ion-buttons>
     <ion-buttons end>
-      <button ion-button icon-end color="primary" end (click)="showDeleteConfirmation()">
+      <button ion-button icon-end color="light" end (click)="showDeleteConfirmation()">
         Delete
         <ion-icon name="trash"></ion-icon>
       </button>

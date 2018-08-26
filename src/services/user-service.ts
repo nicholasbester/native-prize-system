@@ -17,12 +17,20 @@ export class UserService {
     private file: File
   ) {
     if (platform.is("ios")) this.storageFolder = file.documentsDirectory;
-    else if (platform.is("android")) this.storageFolder = file.dataDirectory;
+    else if (platform.is("android")) this.storageFolder = file.externalDataDirectory;
   }
 
   async initialise() {
     this.storage.get("users").then((value: Array<User>) => {
       if (value) value.length === 0 ? (this.users = []) : (this.users = value);
+    }).then(() => {
+      this.storage.get('venue').then((value:string) => {
+        if (value) User.VENUE = value
+        else {
+          User.VENUE = 'None';
+          this.saveVenue(User.VENUE);
+        }
+      });
     });
   }
 
@@ -37,6 +45,16 @@ export class UserService {
     this.storage.set("users", this.users);
   }
 
+  getVenue():string {
+    return User.VENUE
+  }
+
+  async saveVenue(data) {
+    User.VENUE = data;
+
+    await this.storage.set('venue', User.VENUE);
+  }
+
   exportUsers() {
     this.csvFile = this.convertToCSV(this.users);
 
@@ -44,10 +62,13 @@ export class UserService {
     if (this.platform.is("mobile")) {
       this.fileBlob = new Blob([this.csvFile], { type: "text/csv" });
       this.file
-        .writeFile(this.storageFolder, "users.csv", this.fileBlob)
-        .then(value => {
-          console.log(value);
-        });
+        .writeFile(this.storageFolder, "users.csv", this.fileBlob, {replace: true} )
+        .then(success => {
+          console.log("File write success : ", success)
+        },
+        error => {
+          console.log(" write File error  : ", error )
+        })
     } else {
       console.log(this.csvFile);
     }

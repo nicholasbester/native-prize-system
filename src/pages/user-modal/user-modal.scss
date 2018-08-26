@@ -1,3 +1,5 @@
 page-user-modal {
-
+    .user-modal {
+        background-color: map-get($colors, dark);
+    }
 }

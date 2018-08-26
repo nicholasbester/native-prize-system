@@ -8,6 +8,8 @@ export class User {
     venue: string;
     marketing: boolean;
 
+    static VENUE:string = "";
+    
     // This static variable contains the field labels, field types and placeholder text for display on the register page
     // The name field should match the name of the public variables used for storing user data
     static fieldTypes:Array<Object> = [
@@ -28,7 +30,10 @@ export class User {
         {
             label: 'Email address',
             name: 'email',
-            formBuilder: ['', Validators.required],
+            formBuilder: ['', Validators.compose([
+                Validators.required,
+                Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+            ])],
             type: 'email',
             placeholder: 'Enter your email address'
         },

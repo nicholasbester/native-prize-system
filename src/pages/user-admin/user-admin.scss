@@ -1,3 +1,5 @@
 page-user-admin {
-
+    .user-admin {
+        background-color: map-get($colors, dark);
+    }
 }

@@ -1,31 +1,11 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
-
-
-<ion-content padding>
-  <ion-slides pager>
-
-    <ion-slide style="background-color: green">
-      <h2>Slide 1</h2>
-    </ion-slide>
-
-    <ion-slide style="background-color: blue">
-      <h2>Slide 2</h2>
-    </ion-slide>
-
-    <ion-slide style="background-color: red">
-      <h2>Slide 3</h2>
-    </ion-slide>
-
-  </ion-slides>
-  <p>
-    <!-- Use this to show the admin menu -->
-    <button ion-button color="primary" menuToggle>Toggle Menu</button>
-  </p>
+<ion-content class="home">
+  <ion-grid style="height: 100%">
+    <ion-row justify-content-center align-items-center style="height: 100%">
+      <ion-col col-6>
+        <button ion-button color="secondary" (click)="gotoPage('start')" large full>Start Game</button>
+        <button ion-button color="secondary" (click)="gotoPage('users')" large full>Users registered</button>
+        <button ion-button color="secondary" (click)="gotoPage('prizes')" large full>Prize and venue management</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

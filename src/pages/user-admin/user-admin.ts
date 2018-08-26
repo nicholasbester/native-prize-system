@@ -1,28 +1,29 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController, AlertController } from 'ionic-angular';
+import { ModalController, AlertController } from 'ionic-angular';
 import { UserModalPage } from '../user-modal/user-modal';
-import { SocialSharing } from '@ionic-native/social-sharing';
 import { DataProvider } from '../../providers/data-provider';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 
-@IonicPage()
 @Component({
   selector: 'page-user-admin',
   templateUrl: 'user-admin.html'
 })
 export class UserAdminPage {
   users: Array<any>;
+  options: NativeTransitionOptions = {
+    duration: 2000,
+    slowdownfactor: 3,
+    slidePixels: 20,
+    iosdelay: 100,
+    androiddelay: 150
+  }
 
-  constructor(public modalCtrl:ModalController, public alertCtrl:AlertController, private socialSharing:SocialSharing, private dataProvider:DataProvider) {
+  constructor(public modalCtrl:ModalController, public alertCtrl:AlertController, private dataProvider:DataProvider, private nativePageTransition: NativePageTransitions) {
     this.users = [];
-
-    this.socialSharing.canShareViaEmail().then(() => {
-      console.log('Sharing is possible');
-    }).catch(() => {
-      console.log('Email sharing is NOT possible');
-    });
   }
 
   ngOnInit() {
+    this.nativePageTransition.fade(this.options);
     this.users = this.dataProvider.getData('users');
   }
 

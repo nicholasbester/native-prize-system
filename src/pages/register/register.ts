@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { StartPage } from '../start/start';
 import { GamePage } from '../game/game';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DataProvider } from '../../providers/data-provider';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 
-@IonicPage()
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',
@@ -15,14 +15,23 @@ export class RegisterPage {
   formData: FormGroup;
   foo = 5;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private dataProvider:DataProvider, public alertCtrl:AlertController) {
+  options: NativeTransitionOptions = {
+    duration: 2000,
+    slowdownfactor: 3,
+    slidePixels: 20,
+    iosdelay: 100,
+    androiddelay: 150
+  }
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private dataProvider:DataProvider, public alertCtrl:AlertController, private nativePageTransition: NativePageTransitions) {
     this.userFields = this.dataProvider.getUserFields();
     this.formData = this.formBuilder.group(dataProvider.getFormData());
   }
 
   submitForm() {
-    console.log(this.formData.value);
-    if (this.formData.valid && this.formData.value['venue'] !== 'None') {
+    this.formData.value['venue'] = this.dataProvider.getData('venue');
+
+    if (this.formData.valid) {
       this.dataProvider.saveData(this.formData.value, 'user');
       this.gotoPage('game');
     } else {
@@ -44,6 +53,7 @@ export class RegisterPage {
   }
 
   gotoPage(page:string) {
+    this.nativePageTransition.fade(this.options);
     if(page === 'start') {
       this.navCtrl.setRoot(StartPage);
     } else if (page === 'game') {

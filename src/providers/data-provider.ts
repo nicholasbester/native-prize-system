@@ -17,8 +17,8 @@ export class DataProvider {
     private storage: Storage,
     private file: File
   ) {
-    this.userService = new UserService(platform, storage, file);
-    this.prizeService = new PrizeService(storage);
+    this.userService = new UserService(this.platform, this.storage, this.file);
+    this.prizeService = new PrizeService(this.storage);
   }
 
   async initialise() {
@@ -31,6 +31,10 @@ export class DataProvider {
       return this.userService.getUsers();
     } else if (value === "prizes") {
       return this.prizeService.getPrizes();
+    } else if (value == 'venue') {
+      return this.userService.getVenue();
+    } else if (value == 'ratio') {
+      return this.prizeService.getRatio();
     }
   }
 
@@ -64,6 +68,10 @@ export class DataProvider {
       this.userService.saveUser(usr);
     } else if (type == 'prize') {
       this.prizeService.savePrize(data);
+    } else if (type == 'venue') {
+      this.userService.saveVenue(data);
+    } else if (type == 'ratio') {
+      this.prizeService.saveRatio(data);
     }
   }
 

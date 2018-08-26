@@ -3,7 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { UserAdminPage } from './user-admin';
 @NgModule({
   declarations: [
-    UserAdminPage
+    // UserAdminPage
   ],
   imports: [
     IonicPageModule.forChild(UserAdminPage),

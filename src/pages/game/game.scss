@@ -1,4 +1,53 @@
 .game {
-  // Add details here
-  background-color: #FFF;
+  background-image: url('../assets/imgs/gamebackground.jpg');
+  position: relative;
+
+  .vinylA {
+    position: absolute;
+    top: 164px;
+    left: 98px;
+  }
+
+  .vinylB {
+    position: absolute;
+    top: 164px;
+    left: 630px;
+  }
+
+  .thank-you-element {
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    width: 600px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -300px;
+  }
+
+  p {
+    span {
+      color: map-get($colors, primary);
+    }
+  }
+
+  .inactive {
+    animation: fadeout 0.5s linear forwards;
+    -webkit-animation: fadeout 0.5s linear forwards;
+  }
+
+  .active {
+    animation: fadein 0.5s linear forwards;
+    -webkit-animation: fadein 0.5s linear forwards;
+  }
+
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
 }

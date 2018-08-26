@@ -1,19 +1,27 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Nav } from 'ionic-angular';
+import { NavController, NavParams, Nav } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 
-@IonicPage()
 @Component({
   selector: 'page-start',
   templateUrl: 'start.html',
 })
 export class StartPage {
   @ViewChild(Nav) nav: Nav;
+  options: NativeTransitionOptions = {
+    duration: 2000,
+    slowdownfactor: 10,
+    slidePixels: 200,
+    iosdelay: 150,
+    androiddelay: 150
+  }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private nativePageTransition: NativePageTransitions) {}
 
   gotoStart() {
-    this.navCtrl.setRoot(RegisterPage);
+    this.nativePageTransition.fade(this.options);
+    this.navCtrl.push(RegisterPage);
   }
 
   ionViewDidLoad() {

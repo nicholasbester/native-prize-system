@@ -4,7 +4,7 @@ import { UserModalPage } from './user-modal';
 
 @NgModule({
   declarations: [
-    UserModalPage,
+    // UserModalPage,
   ],
   imports: [
     IonicPageModule.forChild(UserModalPage),

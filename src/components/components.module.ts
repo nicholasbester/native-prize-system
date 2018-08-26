@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
-import { VinylComponent } from './vinyl/vinyl';
+
 @NgModule({
-	declarations: [VinylComponent],
+	declarations: [
+		// VinylComponent
+	],
 	imports: [],
-	exports: [VinylComponent]
+	exports: [
+		// VinylComponent
+	]
 })
 export class ComponentsModule {}
