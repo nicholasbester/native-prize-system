@@ -11,11 +11,11 @@ import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/na
 })
 export class HomePage {
   options: NativeTransitionOptions = {
-    duration: 2000,
-    slowdownfactor: 3,
-    slidePixels: 20,
-    iosdelay: 100,
-    androiddelay: 150
+    duration: 100,
+    slowdownfactor: 10,
+    slidePixels: 200,
+    iosdelay: 15,
+    androiddelay: 15
   }
   constructor(private navCtrl: NavController, private nativePageTransition: NativePageTransitions) {}
 

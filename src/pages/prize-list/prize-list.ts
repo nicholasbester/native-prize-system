@@ -15,11 +15,11 @@ export class PrizeListPage {
   ratio: number;
 
   options: NativeTransitionOptions = {
-    duration: 2000,
-    slowdownfactor: 3,
-    slidePixels: 20,
-    iosdelay: 100,
-    androiddelay: 150
+    duration: 100,
+    slowdownfactor: 10,
+    slidePixels: 200,
+    iosdelay: 15,
+    androiddelay: 15
   }
 
   constructor(public alertCtrl: AlertController, private dataProvider: DataProvider, private nativePageTransition: NativePageTransitions) {}

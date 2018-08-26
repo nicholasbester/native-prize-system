@@ -16,11 +16,11 @@ export class RegisterPage {
   foo = 5;
 
   options: NativeTransitionOptions = {
-    duration: 2000,
-    slowdownfactor: 3,
-    slidePixels: 20,
-    iosdelay: 100,
-    androiddelay: 150
+    duration: 100,
+    slowdownfactor: 10,
+    slidePixels: 200,
+    iosdelay: 15,
+    androiddelay: 15
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private dataProvider:DataProvider, public alertCtrl:AlertController, private nativePageTransition: NativePageTransitions) {

@@ -8,3 +8,12 @@ Android properties
 com.android.support:support-v4:27.1.0
 
 https://gist.github.com/agrcrobles/165ac477a9ee51198f4a870c723cd441
+
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore /Users/nickbester/Documents/Sites/prize-system/prize-system/resources/cert.keystore /Users/nickbester/Documents/Sites/prize-system/prize-system/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk bacardi
+
+/usr/local/share/android-sdk/build-tools/27.0.3/./zipalign -v 4 /Users/nickbester/Documents/Sites/prize-system/prize-system/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk /Users/nickbester/Documents/Sites/prize-system/prize-system/platforms/android/app/build/outputs/apk/release/bacardi.apk
+
+ionic cordova build android --prod --release -- -- --keystore=/Users/nickbester/Documents/Sites/prize-system/prize-system/resources/cert.keystore  --alias=bacardi
+
+ionic cordova build android --prod --minifyjs --minifycss --aot --release -- --keystore="/Users/nickbester/Documents/Sites/prize-system/prize-system/resources/cert.keystore" --storePassword=mech1x8 --alias=bacardi

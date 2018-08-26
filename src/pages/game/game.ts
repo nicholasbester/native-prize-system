@@ -22,11 +22,11 @@ export class GamePage {
   audioLoaded:Boolean = false;
 
   options: NativeTransitionOptions = {
-    duration: 2000,
+    duration: 100,
     slowdownfactor: 10,
     slidePixels: 200,
-    iosdelay: 150,
-    androiddelay: 150
+    iosdelay: 15,
+    androiddelay: 15
   }
 
   constructor(public modalCtrl:ModalController, public navCtrl: NavController, public navParams: NavParams, private dataProvider:DataProvider, private nativeAudio: NativeAudio, private nativePageTransition: NativePageTransitions) {
@@ -50,7 +50,7 @@ export class GamePage {
       let prize:any = this.dataProvider.getUserPrize();
       this.prizeReceived = true;
 
-      this.nativeAudio.play('scratch');
+      this.nativeAudio.stop('scratch');
       this.nativeAudio.stop('music');
 
       // TODO: Play scratch sound here
