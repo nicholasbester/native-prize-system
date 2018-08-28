@@ -50,4 +50,19 @@
     from { opacity: 1; }
     to   { opacity: 0; }
   }
+
+
+  #right-arm {
+    position: absolute;
+    top: 146px;
+    right: 277px;
+    z-index: 1000;
+  }
+
+  #left-arm {
+    position: absolute;
+    top: 146px;
+    left: 282px;
+    z-index: 1000;
+  }
 }

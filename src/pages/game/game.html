@@ -1,4 +1,6 @@
 <ion-content class="game">
+    <img [ngClass]="{'active': prizeReceived === false, 'inactive': prizeReceived === true}" src="assets/imgs/left-arm.png" alt="" id="left-arm">
+    <img [ngClass]="{'active': prizeReceived === false, 'inactive': prizeReceived === true}" src="assets/imgs/right-arm.png" alt="" id="right-arm">
     <vinyl (touchend)="getPrize('prizeModalA')" (touchstart)=playScratch() (mouseup)="getPrize('prizeModalA')" class="vinylA" #vinylA></vinyl>
     <vinyl (touchend)="getPrize('prizeModalB')" (touchstart)=playScratch() (mouseup)="getPrize('prizeModalB')" class="vinylB" #vinylB></vinyl>
     <div *ngIf="prizeName != ''" class="thank-you-element" [ngClass]="{'active': prizeReceived === true, 'inactive': prizeReceived === false}">
