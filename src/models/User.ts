@@ -7,6 +7,7 @@ export class User {
     cellNumber: string;
     venue: string;
     marketing: boolean;
+    date: string;
 
     static VENUE:string = "";
     
@@ -40,7 +41,11 @@ export class User {
         {
             label: 'Cell number',
             name: 'cellNumber',
-            formBuilder: ['', Validators.required],
+            formBuilder: ['', Validators.compose([
+                Validators.required,
+                Validators.maxLength(10),
+                Validators.pattern(/^(\+\d{1,3}[- ]?)?\d{10}$/)
+            ])],
             type: 'tel',
             placeholder: 'Enter your cell number'
         },
@@ -92,5 +97,7 @@ export class User {
         this.venue = venue;
         this.cellNumber = cellNumber;
         this.marketing = marketing;
+        this.date = new Date().toLocaleString();
+        this.date = this.date.replace(',', ' -');
     }
 }

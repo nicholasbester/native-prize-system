@@ -31,6 +31,8 @@ export class RegisterPage {
   submitForm() {
     this.formData.value['venue'] = this.dataProvider.getData('venue');
 
+    console.log(this.formData);
+
     if (this.formData.valid) {
       this.dataProvider.saveData(this.formData.value, 'user');
       this.gotoPage('game');

@@ -122,6 +122,8 @@ export class PrizeService {
       count++;
     });
 
+    console.log(arr);
+
     return arr;
   }
 }
