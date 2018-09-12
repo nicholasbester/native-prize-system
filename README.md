@@ -14,7 +14,7 @@ ionic cordova build android --prod --release
 
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore /Users/nickbester/Documents/Sites/prize-system/prize-system/resources/cert.keystore /Users/nickbester/Documents/Sites/prize-system/prize-system/platforms/android/build/outputs/apk/android-release-unsigned.apk bacardi
 
-/usr/local/share/android-sdk/build-tools/27.0.3/./zipalign -v 4 /Users/nickbester/Documents/Sites/prize-system/prize-system/platforms/android/build/outputs/apk/android-release-unsigned.apk /Users/nickbester/Documents/Sites/prize-system/prize-system/platforms/android/build/outputs/apk/bacardi.apk
+/usr/local/share/android-sdk/build-tools/27.0.3/./zipalign -v 4 /Users/nickbester/Documents/Sites/prize-system/prize-system/platforms/android/build/outputs/apk/android-release-unsigned.apk /Users/nickbester/Documents/Sites/prize-system/prize-system/platforms/android/build/outputs/apk/Bacardi 2.0.apk
 
 # Alternative
 keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias bacardi
