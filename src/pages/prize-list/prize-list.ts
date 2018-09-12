@@ -42,7 +42,6 @@ export class PrizeListPage {
             this.prizes.forEach((prize, index) => {
               this.prizes[index]['quantity'] = +this.prizes[index]['quantity'];
             });
-
             this.ratio = +this.ratio;
             this.dataProvider.saveData(this.prizes, 'prize');
             this.dataProvider.saveData(this.venue, 'venue');
@@ -52,7 +51,6 @@ export class PrizeListPage {
         {
           text: 'No',
           handler: data => {
-            console.log('Cancelled prize save');
           }
         }]
     });
@@ -63,7 +61,5 @@ export class PrizeListPage {
     this.prizes[index].quantity = event.target.value;
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PrizeListPage');
-  }
+  ionViewDidLoad() {}
 }

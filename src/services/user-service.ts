@@ -17,7 +17,7 @@ export class UserService {
     private file: File
   ) {
     if (platform.is("ios")) this.storageFolder = file.documentsDirectory;
-    else if (platform.is("android")) this.storageFolder = file.externalDataDirectory;
+    else if (platform.is("android")) this.storageFolder = file.externalRootDirectory;
   }
 
   async initialise() {

@@ -49,8 +49,9 @@ export class PrizeService {
   }
 
   async savePrize(data: Array<Prize>) {
-    console.log('Save prizes')
+    console.log('Save prizes');
     this.prizes = data;
+
     await this.storage.set("prizes", this.prizes).then(() => {
       this.userPrizes = this.createPrizeArray(this.prizes, Prize.RATIO);
     });
@@ -66,15 +67,27 @@ export class PrizeService {
   }
 
   getPrize(): Prize {
-    let prize = this.userPrizes.pop();
-    if (prize != undefined) this.decrementPrize(prize);
+    console.log('Get Prize');
+    let slug = this.userPrizes.pop();
+    let prize;
+
+    for (let i = 0; i < this.prizes.length; i++) {
+      if (this.prizes[i].slug === slug) {
+        console.log(slug);
+        prize = this.prizes[i];
+        if (this.prizes[i]['quantity'] > 0) this.decrementPrize(this.prizes[i]);
+        break;
+      }
+    };
+     
     return prize;
   }
 
   // Decrement prize value
   async decrementPrize(prize: Prize) {
+    console.log('Decrement prize');
     for (let i = 0; i < this.prizes.length; i++) {
-      if (this.prizes[i] === prize) {
+      if (this.prizes[i].slug === prize.slug) {
         this.prizes[i].quantity--;
         break;
       }
@@ -87,42 +100,59 @@ export class PrizeService {
   createPrizeArray(inarr: Array<Prize>, ratio: number): Array<any> {
     console.log('Creating user prize array');
     let arr = [];
-    let localPrizes = inarr.slice(0);
+    let localPrizes = [];
     let tempQuantities: Array<number> = [];
     let tempCount = 0;
 
     // Get the quantity of the prizes into a value and store the quantities for reference
+    let j = 0;
     inarr.forEach(item => {
+      if (item.quantity > 0) {
+        localPrizes[j] = {
+          name: item['name'],
+          slug: item['slug'],
+          quantity: item['quantity'],
+          imageSource: item['imageSource']
+        };
+        j++;
+      }
       tempQuantities.push(item.quantity);
-      tempCount = + item.quantity;
+      tempCount += item.quantity;
     });
 
-    if (tempCount) {
+    if (tempCount > 0) {
       // Local prize quantities is decrimented until no prizes remain to dispense
       // Prizes are pushed to an array to be understood by the prize mechanic
       let i = 0;
+
       while (localPrizes.length > 0) {
+        let randomValue = Math.floor(Math.random() * (localPrizes.length));
+
+        if (randomValue >= localPrizes.length) {
+          randomValue = localPrizes.length - 1;
+        }
+
         if (i % ratio === 0) {
-          let randomValue = Math.floor(Math.random() * (localPrizes.length));
-          arr.push(localPrizes[randomValue]);
-          localPrizes[randomValue].quantity--;
-          if (localPrizes[randomValue].quantity <= 0) localPrizes.splice(randomValue, 1);
+          arr.push(localPrizes[randomValue].slug); 
+          localPrizes[randomValue]['quantity']--;
+          if (localPrizes[randomValue]['quantity'] <= 0) localPrizes.splice(randomValue, 1);  
         } else {
           arr.push("try-again");
         }
+
         i++;
       }
+
     } else {
-      console.log("No prizes loaded");
+      console.log("None of the prizes had a quantity greater than 0");
     }
 
     let count = 0;
+
     inarr.forEach(item => {
       item.quantity = tempQuantities[count];
       count++;
     });
-
-    console.log(arr);
 
     return arr;
   }
