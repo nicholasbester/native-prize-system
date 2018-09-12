@@ -22,6 +22,7 @@ import { File } from '@ionic-native/file';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Keyboard } from '@ionic-native/keyboard';
+import { Device } from '@ionic-native/device';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { Keyboard } from '@ionic-native/keyboard';
     DataProvider,
     NativeAudio,
     NativePageTransitions,
+    Device,
     File,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Keyboard

@@ -6,6 +6,7 @@ import { File } from "@ionic-native/file";
 import { Platform } from "ionic-angular";
 import { UserService } from "../services/user-service";
 import { PrizeService } from "../services/prize-service";
+import { Device } from '@ionic-native/device';
 
 @Injectable()
 export class DataProvider {
@@ -15,9 +16,10 @@ export class DataProvider {
   constructor(
     public platform: Platform,
     private storage: Storage,
-    private file: File
+    private file: File,
+    private device: Device
   ) {
-    this.userService = new UserService(this.platform, this.storage, this.file);
+    this.userService = new UserService(this.platform, this.storage, this.file, this.device);
     this.prizeService = new PrizeService(this.storage);
   }
 
